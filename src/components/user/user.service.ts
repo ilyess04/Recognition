@@ -39,6 +39,11 @@ export class UserService {
     );
   }
   async getUsers(myId: string): Promise<Array<User>> {
-    return await this.userModel.find({ _id: { $ne: myId } }).exec();
+    return await this.userModel.find({
+      _id: { $ne: myId },
+      isDeleted: false,
+      isArchived: false,
+    }).exec();
   }
+  
 }

@@ -3,4 +3,10 @@ interface ICreateRecognition {
   architecture: string;
   file: string;
 }
-export type { ICreateRecognition };
+
+interface IEditRecognition {
+  name?: string;
+  architecture?: string;
+  file?: string;
+}
+export type { ICreateRecognition, IEditRecognition };
