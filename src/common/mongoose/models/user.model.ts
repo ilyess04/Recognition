@@ -11,7 +11,7 @@ export class User extends CommonModel {
     required: true,
     trim: true,
   })
-  fullName: string;
+  fullname: string;
   @Prop({
     type: String,
     required: true,

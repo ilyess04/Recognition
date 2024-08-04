@@ -31,4 +31,14 @@ export class UserService {
   async createUser(payload: ICreateUser): Promise<User> {
     return await new this.userModel(payload).save();
   }
+  async deleteUser(id: string): Promise<User> {
+    return await this.userModel.findByIdAndUpdate(
+      id,
+      { $set: { isArchived: true, isDeleted: true } },
+      { new: true },
+    );
+  }
+  async getUsers(myId: string): Promise<Array<User>> {
+    return await this.userModel.find({ _id: { $ne: myId } }).exec();
+  }
 }

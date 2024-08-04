@@ -33,13 +33,23 @@ export class CreateUserDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  readonly fullName: string;
+  readonly fullname: string;
   @ApiProperty()
   @IsNotEmpty()
   @IsEmail()
   readonly email: string;
   @IsString()
   @IsNotEmpty()
+  @ApiProperty()
+  readonly password: string;
+}
+
+export class UpdateUserDto {
+  @ApiProperty()
+  readonly fullname: string;
+  @ApiProperty()
+  @IsEmail()
+  readonly email: string;
   @ApiProperty()
   readonly password: string;
 }

@@ -9,6 +9,8 @@ import {
   Get,
   UseGuards,
   Param,
+  Request,
+  Put,
 } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
@@ -16,10 +18,17 @@ import { EmailService } from 'src/common/email/email.service';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { openApiResponse } from 'src/common/decorator/openApi.decorator';
-import { CreateUserDto, LoginDto, ResetPasswordDto, SendMailDto } from './dto';
+import {
+  CreateUserDto,
+  LoginDto,
+  ResetPasswordDto,
+  SendMailDto,
+  UpdateUserDto,
+} from './dto';
 import { IRequest } from 'src/common/interfaces';
 import { RefreshStrategy } from 'src/common/strategy/refresh.strategy';
 import { UserService } from '../user.service';
+import { JwtStrategy } from 'src/common/strategy/jwt.srategy';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -213,6 +222,76 @@ export class AuthController {
       return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
         message: error,
+      });
+    }
+  }
+
+  @Get('getMyInfo')
+  @UseGuards(AuthGuard('jwt'), JwtStrategy)
+  public async getMyInfo(@Res() res: Response, @Request() req: IRequest) {
+    try {
+      const user = this.userService.getUserById(req.user['_id']);
+      return res.status(HttpStatus.OK).send({
+        user,
+      });
+    } catch (err) {
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        errors: err,
+        message: 'something went wrong',
+      });
+    }
+  }
+
+  @Put('updateMyInfo')
+  @UseGuards(AuthGuard('jwt'), JwtStrategy)
+  public async updateMyInfo(
+    @Res() res: Response,
+    @Body() body: UpdateUserDto,
+    @Request() req: IRequest,
+  ) {
+    try {
+      const user = this.userService.updateUser({
+        _id: req.user['_id'],
+        updatedBy: req.user['_id'],
+        ...body,
+      });
+      return res.status(HttpStatus.OK).send({
+        user,
+      });
+    } catch (err) {
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        errors: err,
+        message: 'something went wrong',
+      });
+    }
+  }
+
+  @Put('changeMyPassword')
+  @UseGuards(AuthGuard('jwt'), JwtStrategy)
+  public async changePassword(
+    @Res() res: Response,
+    @Body() body: UpdateUserDto,
+    @Request() req: IRequest,
+  ) {
+    try {
+      const cryptedPassword = await this.authService.hashPassword(
+        body.password,
+      );
+      const user = await this.userService.updateUser({
+        _id: req.user['_id'],
+        updatedBy: req.user['_id'],
+        password: cryptedPassword,
+      });
+      return res.status(HttpStatus.OK).send({
+        user,
+      });
+    } catch (err) {
+      throw new InternalServerErrorException({
+        statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+        errors: err,
+        message: 'something went wrong',
       });
     }
   }
