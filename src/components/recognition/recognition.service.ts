@@ -5,11 +5,11 @@ import { Recognition } from 'src/common/mongoose/models/recognition.model';
 import { RECOGNITION_PROVIDER } from 'src/config';
 
 @Injectable()
-export class CompanyService {
+export class RecognitionService {
   constructor(
     @Inject(RECOGNITION_PROVIDER)
     private readonly recognitionModel: Model<Recognition>,
-  ) {}
+  ) {} 
   async createRecognition(payload: ICreateRecognition): Promise<Recognition> {
     return await this.recognitionModel.create(payload);
   }
