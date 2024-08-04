@@ -11,7 +11,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { RecognitionService } from './recognition.service';
 import { Response } from 'express';
-import { CreateCompanyDto } from './dto';
+import { CreateRecognitionDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtStrategy } from 'src/common/strategy/jwt.srategy';
 import { openApiResponse } from 'src/common/decorator/openApi.decorator';
@@ -36,7 +36,7 @@ export class RecognitionController {
   )
   async CreateRecogition(
     @Res() res: Response,
-    @Body() body: CreateCompanyDto,
+    @Body() body: CreateRecognitionDto,
     @Request() req: IRequest,
   ) {
     try {
