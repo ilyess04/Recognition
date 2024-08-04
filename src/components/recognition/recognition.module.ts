@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CompanyService } from './company.service';
-import { CompanyProvider } from './company.provider';
-import { CompanyController } from './company.controller';
 import { DatabaseModule } from 'src/common/mongoose/database/database.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from '../user/auth/auth.service';
 import { UserProvider } from '../user/user.provider';
 import { UserService } from '../user/user.service';
+import { RecognitionProvider } from './recognition.provider';
+import { RecognitionController } from './recognition.controller';
+import { RecognitionService } from './recognition.service';
 
 @Module({
   imports: [
@@ -18,13 +18,13 @@ import { UserService } from '../user/user.service';
     }),
   ],
   providers: [
-    CompanyService,
-    ...CompanyProvider,
+    RecognitionService,
+    ...RecognitionProvider,
     AuthService,
     UserService,
     ...UserProvider,
   ],
-  controllers: [CompanyController],
-  exports: [CompanyService, ...CompanyProvider],
+  controllers: [RecognitionController],
+  exports: [RecognitionService, ...RecognitionProvider],
 })
-export class CompanyModule {}
+export class RecognitionModule {}

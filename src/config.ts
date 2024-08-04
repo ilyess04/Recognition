@@ -1,8 +1,8 @@
 //mongoose
 const DB_PROVIDER = 'DatabaseProviders';
 const USER_PROVIDER = 'UserProvider';
-const COMPANY_PROVIDER = 'CompanyProvider';
-export { DB_PROVIDER, USER_PROVIDER, COMPANY_PROVIDER };
+const RECOGNITION_PROVIDER = 'CompanyProvider';
+export { DB_PROVIDER, USER_PROVIDER, RECOGNITION_PROVIDER };
 
 //tokens
 const ACCESS_TOKEN_TIMEOUT = '300s';

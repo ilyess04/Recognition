@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CompanyService } from './company.service';
+import { RecognitionService } from './recognition.service';
 import { Response } from 'express';
 import { CreateCompanyDto } from './dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -17,10 +17,10 @@ import { JwtStrategy } from 'src/common/strategy/jwt.srategy';
 import { openApiResponse } from 'src/common/decorator/openApi.decorator';
 import { IRequest } from 'src/common/interfaces';
 
-@ApiTags('company')
-@Controller('company')
-export class CompanyController {
-  constructor(private readonly companyService: CompanyService) {}
+@ApiTags('recognition')
+@Controller('recognition')
+export class RecognitionController {
+  constructor(private readonly recognitionService: RecognitionService) {}
 
   @UseGuards(AuthGuard('jwt'), JwtStrategy)
   @Post('create')
@@ -34,15 +34,16 @@ export class CompanyController {
       description: 'something went wrong!',
     },
   )
-  async CreateCompany(
+  async CreateRecogition(
     @Res() res: Response,
     @Body() body: CreateCompanyDto,
     @Request() req: IRequest,
   ) {
     try {
-      const company = await this.companyService.createCompany({
+      const company = await this.recognitionService.createRecognition({
         name: body.name,
-        manager: req.user['_id'],
+        file:"",
+        architecture: req.user['_id'],
       });
       return res.status(HttpStatus.CREATED).send({
         statusCode: HttpStatus.CREATED,

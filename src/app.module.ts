@@ -4,10 +4,10 @@ import { AppService } from './app.service';
 import { EmailModule } from './common/email/email.module';
 import { DatabaseModule } from './common/mongoose/database/database.module';
 import { UserModule } from './components/user/user.module';
-import { CompanyModule } from './components/company/company.module';
+import { RecognitionModule } from './components/recognition/recognition.module';
 
 @Module({
-  imports: [EmailModule, DatabaseModule, UserModule, CompanyModule],
+  imports: [EmailModule, DatabaseModule, UserModule, RecognitionModule],
   controllers: [AppController],
   providers: [AppService],
 })
