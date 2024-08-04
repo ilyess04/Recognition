@@ -4,10 +4,12 @@ import { AppModule } from './app.module';
 import { rateLimit } from 'express-rate-limit';
 import { ValidationPipe } from './common/pipes/validation.pipes';
 import * as dotenv from 'dotenv';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
   dotenv.config();
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const port = process.env.PORT || 8000;
   const helmet = require('helmet');
   const limiter = rateLimit({
@@ -32,6 +34,8 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.use(limiter);
+
+  app.useStaticAssets(join(__dirname, '..', 'uploads'));
 
   await app.listen(port, () => console.log('App is runing on port :', port));
 }
