@@ -5,4 +5,7 @@ export class CreateRecognitionDto {
   @IsString()
   @ApiProperty()
   name: string;
+  @IsString()
+  @ApiProperty()
+  architecture: string;
 }

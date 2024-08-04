@@ -19,6 +19,13 @@ export class Recognition extends CommonModel {
     trim: true,
   })
   architecture: string;
+
+  @Prop({
+    type: String,
+    required: true,
+    trim: true,
+  })
+  file: string;
 }
 
 export const RecognitionSchema = SchemaFactory.createForClass(Recognition);
