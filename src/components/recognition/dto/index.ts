@@ -9,3 +9,10 @@ export class CreateRecognitionDto {
   @ApiProperty()
   architecture: string;
 }
+
+export class UpdateRecognitionDto {
+  @ApiProperty()
+  name?: string;
+  @ApiProperty()
+  architecture?: string;
+}

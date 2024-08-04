@@ -46,10 +46,10 @@ export class CreateUserDto {
 
 export class UpdateUserDto {
   @ApiProperty()
-  readonly fullname: string;
+  readonly fullname?: string;
   @ApiProperty()
   @IsEmail()
-  readonly email: string;
+  readonly email?: string;
   @ApiProperty()
-  readonly password: string;
+  readonly password?: string;
 }
